@@ -1,9 +1,12 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect,jsonify, url_for, url_for, g
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, UpdateProfileForm, ChangePasswordForm, DeactivateAccountForm
+from app.forms import LoginForm, RegistrationForm, UpdateProfileForm, ChangePasswordForm, DeactivateAccountForm, \
+    MessageForm
 import time
 from flask_login import current_user, login_user, logout_user
 from app.models import User, Message
+from sqlalchemy.exc import IntegrityError
+from .utils.auth import generate_token, requires_auth, verify_token
 
 
 @app.route('/')
@@ -133,7 +136,8 @@ def deactivateaccount():
         flash('Invalid password')
         #return redirect(url_for('index'))
     return render_template('deactivateaccount.html', title='Deactivate Account', form=form)
-"""
+
+
 @app.route('/newmessage', methods=['GET', 'POST'])
 def newmessage():
     if not current_user.is_authenticated:
@@ -141,28 +145,87 @@ def newmessage():
 
     form = MessageForm()
     if form.validate_on_submit():
-        sender = current_user
-        sender_name = sender.username
-        receiver_username = form.receiver_name
-        receiver_id =
-        message = Message(se)
-        user.set_display_name(form.display_name.data)
-        user.set_bio(form.bio.data)
-        user.set_dob(form.dob.data)
-            #user.set_profile_pic(form.profile_pic.data)
-            db.session.commit()
-            flash('Profile Updated!')
-            return redirect(url_for('myprofile'))
-        elif request.method == 'GET':
-            form.dob.data = current_user.dob
-            form.bio.data = current_user.bio
-            form.display_name.data = current_user.display_name
-        return render_template('updateprofile.html', title='My Profile', form=form)
-    return redirect(url_for('index'))
-"""
-""""
-@app.route('/browse', methods=['GET', 'POST'])
-def browseuser():
+        s_name = current_user.display_name
+        s_id = current_user.id
+        receiver = User.query.filter_by(username=form.receiver_name.data).first()
+        r_id = receiver.id
+        content = form.content.data
+        msg = Message(body=content, sender_id=s_id, sender_name=s_name, receiver_id=r_id)
+        db.session.add(msg)
+        db.session.commit()
+        flash('Message Sent!')
+        return redirect(url_for('inbox'))
+    #else:
+        #flash('Error creating message. Please try again')
+
+    return render_template('newmessage.html', title='Create Message', form=form)
+
+
+@app.route('/inbox', methods=['GET', 'POST'])
+def inbox():
     user = current_user
-    return render_template('browseuser.html', user=user)
-"""
+    messages = Message.query.filter_by(receiver_id=user.id).all()
+    return render_template('inbox.html', user=user, msg=messages)
+
+
+
+
+##################Linking with front-end stuff, can remove ltr ###################### 
+
+#@app.route('/', methods=['GET'])
+#def index():
+ #   return render_template('index.html')
+
+
+#@app.route('/<path:path>', methods=['GET'])
+#def any_root_path(path):
+#    return render_template('index.html')
+
+
+@app.route("/api/user", methods=["GET"])
+@requires_auth
+def get_user():
+    return jsonify(result=g.current_user)
+
+
+@app.route("/api/create_user", methods=["POST"])
+def create_user():
+    incoming = request.get_json()
+    user = User(
+        email=incoming["email"],
+        password=incoming["password"]
+    )
+    db.session.add(user)
+
+    try:
+        db.session.commit()
+    except IntegrityError:
+        return jsonify(message="User with that email already exists"), 409
+
+    new_user = User.query.filter_by(email=incoming["email"]).first()
+
+    return jsonify(
+        id=user.id,
+        token=generate_token(new_user)
+    )
+
+
+@app.route("/api/get_token", methods=["POST"])
+def get_token():
+    incoming = request.get_json()
+    user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
+    if user:
+        return jsonify(token=generate_token(user))
+
+    return jsonify(error=True), 403
+
+
+@app.route("/api/is_token_valid", methods=["POST"])
+def is_token_valid():
+    incoming = request.get_json()
+    is_valid = verify_token(incoming["token"])
+
+    if is_valid:
+        return jsonify(token_is_valid=True)
+    else:
+        return jsonify(token_is_valid=False), 403

@@ -60,7 +60,7 @@ class DeactivateAccountForm(FlaskForm):
     submit = SubmitField('Confirm Deactivate')
 
 
-#class MessageForm(FlaskForm):
-    #receiver_name = StringField('receiver_name', validators=[DataRequired()])
-    #content = StringField('content', validators=[DataRequired()])
-    #submit = SubmitField('Send Message')
+class MessageForm(FlaskForm):
+    receiver_name = StringField('receiver_name', validators=[DataRequired()])
+    content = StringField('content', validators=[DataRequired()])
+    submit = SubmitField('Send Message')

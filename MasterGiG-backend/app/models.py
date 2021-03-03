@@ -69,7 +69,7 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer)
     sender_name = db.Column((db.String(64)))
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    read_status = db.Column(db.Boolean, default=False)
+    #read_status = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '<Message {}>'.format(self.body)
@@ -88,3 +88,4 @@ class Message(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
