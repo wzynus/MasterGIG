@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p>Display Name: {{ user.display_name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Date of birth: {{ user.dob }}</p>
+    <p>Bio: {{ user.bio }}</p>
+    <p><a href="{{ url_for('updateprofile') }}">Update Profile details</a></p>
+    <p><a href="{{ url_for('changepassword') }}">Change Password</a></p>
+    <p><a href="{{ url_for('deactivateaccount') }}">Deactivate Account</a></p>
+    <p> <a href="{{ url_for('logout') }}">logout</a></p>
+{% endblock %}
