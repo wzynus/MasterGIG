@@ -1,5 +1,5 @@
 {
-  "name": "redux-easy-boilerplate",
+  "name": "MasterGiG",
   "version": "1.3.3",
   "description": "",
   "scripts": {
@@ -27,7 +27,6 @@
     "webpack"
   ],
   "author": "mastergig",
-  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "6.5.3",
     "axios": "^0.15.3",

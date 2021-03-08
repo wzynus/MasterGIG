@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect,jsonify, url_for, url_for, g
+from flask import render_template, flash, redirect,jsonify, url_for, url_for, g, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, UpdateProfileForm, ChangePasswordForm, DeactivateAccountForm, \
     MessageForm
