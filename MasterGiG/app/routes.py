@@ -158,7 +158,7 @@ def newmessage():
         return redirect(url_for('inbox'))
     #else:
         #flash('Error creating message. Please try again')
-        else:
+    else:
         for error in form.errors:
             flash('Error creating message. Please try again')
 
