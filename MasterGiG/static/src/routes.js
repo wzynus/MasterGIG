@@ -5,6 +5,7 @@ export const Routes = {
     DashboardOverview: { path: "/dashboard/overview" },
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
+    Gigs: {path: "/gigs"},
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Billing: { path: "/examples/billing" },
@@ -16,9 +17,8 @@ export const Routes = {
     Lock: { path: "/examples/lock" },
     NotFound: { path: "/examples/404" },
     ServerError: { path: "/examples/500" },
-    Stream: {path: "/{userId}/stream"},
-    Video: {path: "/{userId}/stream"},
-    Gigs: {path: "/gigs"},
+    Stream: {path: "/stream"},
+    Video: {path: "/videos"},
     Message :{path: "/{userId}/message"},
 
 

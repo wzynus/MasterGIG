@@ -40,13 +40,15 @@
     "react-datetime": "^3.0.4",
     "react-dom": "^16.13.1",
     "react-github-btn": "^1.2.0",
+    "react-hls-player": "^2.0.0",
     "react-live": "^2.2.3",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.3.1",
     "react-scripts": "3.4.3",
+    "react-simple-chatbot": "^0.6.1",
     "react-transition-group": "^4.4.1",
     "simplebar-react": "^2.3.0",
-    "react-hls-player": "^2.0.0"
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -71,7 +73,5 @@
       "last 1 safari version"
     ]
   },
-  
   "proxy": "http://localhost:5000"
-  
 }

@@ -99,10 +99,9 @@ export default (props = {}) => {
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem title="MasterGiG" link={Routes.DashboardOverview.path} image={Logo} />
-
               <NavItem title="Streams" link={Routes.Stream.path} icon={faChartPie} />
-              <NavItem title="Videos" icon={faHandHoldingUsd} link={Routes.Video.path} />
-              <NavItem title="Gigs" icon={faHandHoldingUsd} link={Routes.Stream.path} />
+              <NavItem title="Videos" icon={faHandHoldingUsd} link={Routes.Video.path} /> 
+              <NavItem title="Gigs" icon={faHandHoldingUsd} link={Routes.Gigs.path} />
               <NavItem title="Message" icon={faCog} link={Routes.Message.path} />
 
               <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>

@@ -12,7 +12,7 @@ export default () => {
       <>
     <Breadcrumb listProps={{ className: "breadcrumb-primary breadcrumb-text-light text-white" }}>
         <Breadcrumb.Item href="#home">Gig</Breadcrumb.Item>
-        <Breadcrumb.Item active>Data</Breadcrumb.Item>
+        <Breadcrumb.Item active>View my gig plans</Breadcrumb.Item>
     </Breadcrumb>
 
 

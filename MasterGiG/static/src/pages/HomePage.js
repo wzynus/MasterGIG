@@ -17,6 +17,7 @@ import Lock from "./examples/Lock";
 import NotFoundPage from "./examples/NotFound";
 import ServerError from "./examples/ServerError";
 import Gig from "./Gig"
+import Stream from "./Stream"
 
 // documentation pages
 import DocsOverview from "./documentation/DocsOverview";
@@ -117,7 +118,9 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
-    <RouteWithSidebar exact path={Routes.Gigs.path} component = {Gig}/>
+    <RouteWithSidebar path={Routes.Gigs.path} component={Gig}/>
+    <RouteWithSidebar path={Routes.Stream.path} component={Stream}/>
+
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
