@@ -1,27 +1,36 @@
+// =========================================================
+// * Volt React Dashboard
+// =========================================================
+
+// * Product Page: https://themesberg.com/product/dashboard/volt-react
+// * Copyright 2021 Themesberg (https://www.themesberg.com)
+// * Official Repository: https://github.com/themesberg/volt-react-dashboard
+// * License: MIT License (https://themesberg.com/licensing)
+
+// * Designed and coded by https://themesberg.com
+
+// =========================================================
+
+// * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal.
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, Redirect, browserHistory } from 'react-router';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { HashRouter } from "react-router-dom";
 
-import configureStore from './store/configureStore';
-import routes from './routes';
-import './style.scss';
+// core styles
+import "./scss/volt.scss";
 
-require('expose?$!expose?jQuery!jquery');
-require('bootstrap-webpack');
+// vendor styles
+import "@fortawesome/fontawesome-free/css/all.css";
+import "react-datetime/css/react-datetime.css";
 
-injectTapEventPlugin();
-const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+import HomePage from "./pages/HomePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Router history={history}>
-            <Redirect from="/" to="main" />
-            {routes}
-        </Router>
-    </Provider>,
-    document.getElementById('root')
+  <HashRouter>
+    <ScrollToTop />
+    <HomePage />
+  </HashRouter>,
+  document.getElementById("root")
 );
