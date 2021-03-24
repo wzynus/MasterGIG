@@ -48,7 +48,8 @@
     "react-simple-chatbot": "^0.6.1",
     "react-transition-group": "^4.4.1",
     "simplebar-react": "^2.3.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "video.js": "^7.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
