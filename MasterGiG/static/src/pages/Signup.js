@@ -4,14 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { Routes } from "../../routes";
-import BgImage from "../../assets/img/illustrations/signin.svg";
+import { Routes } from "../routes";
+import BgImage from "../assets/img/illustrations/signin.svg";
+import {register} from "../utils/axios_restfulAPI";
 
-class Register extends Component {
+class Signup extends React.Component {
   constructor() {
     super()
     this.state={
@@ -23,13 +24,15 @@ class Register extends Component {
       dob: "",
       profilePicture: ""//not yet done
     }
-    this.onChange = this.onChange.bind(this)
+    this.onChange = this.handleChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   
-  onChange(e){
-    this.setState({[e.target.name]: e.target.value})
+  handleChange(e){
+    this.setState({
+      value: e.currentTarget.value
+    });
   }
 
   onSubmit(e){
@@ -69,7 +72,7 @@ class Register extends Component {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" value = {this.state.email} onChange = {this.onChange}/>
+                      <Form.Control autoFocus required type="email" placeholder="example@company.com"  value = {this.state.email} onChange ={(e)=>this.handleChange}/>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="username" className="mb-4">
@@ -78,7 +81,7 @@ class Register extends Component {
                     <InputGroup.Text>
                       <FontAwesomeIcon icon={faEnvelope} />
                     </InputGroup.Text>
-                    <Form.Control autoFocus placeholder="unique username" value = {this.state.username} onChange = {this.onChange}/>
+                    <Form.Control autoFocus placeholder="unique username" value = {this.state.username} onChange={(e)=>this.handleChange}/>
                   </InputGroup>
                 </Form.Group>
                   <Form.Group id="password" className="mb-4">
@@ -87,7 +90,7 @@ class Register extends Component {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Password" value = {this.state.password} onChange = {this.onChange} />
+                      <Form.Control required type="password" placeholder="Password" value = {this.state.password} onChange = {(e)=>this.handleChange} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
@@ -96,7 +99,7 @@ class Register extends Component {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Confirm Password" value = {this.state.cpassword} onChange = {this.onChange} />
+                      <Form.Control required type="password" placeholder="Confirm Password" value = {this.state.cpassword} onChange = {(e)=>this.handleChange} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="bio" className="mb-4">
@@ -105,24 +108,24 @@ class Register extends Component {
                     <InputGroup.Text>
                       <FontAwesomeIcon icon={faUnlockAlt} />
                     </InputGroup.Text>
-                    <Form.Control  placeholder="Write a brief description about yourself" value = {this.state.bio} onChange = {this.onChange} />
+                    <Form.Control  placeholder="Write a brief description about yourself" value = {this.state.bio} onChange = {(e)=>this.handleChange} />
                   </InputGroup>
                 </Form.Group>
                 <Form.Group id="Date of birth">
                 <Form.Label>Birthday</Form.Label>
                 <Datetime
                   timeFormat={false}
-                  onChange={setBirthday}
+                  onChange={this.onChange}
                   renderInput={(props, openCalendar) => (
                     <InputGroup>
                       <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
                       <Form.Control
                         required
                         type="text"
-                        value={dob ? moment(birthday).format("MM/DD/YYYY") : "this.state.dob"}
+                        value={this.state.dob ? moment(this.state.dob).format("MM/DD/YYYY") : "Your birthday"}
                         placeholder="mm/dd/yyyy"
                         onFocus={openCalendar}
-                        onChange={() => { }} />
+                        onChange={(e)=>this.handleChange} />
                     </InputGroup>
                   )} />
               </Form.Group>
@@ -154,4 +157,4 @@ class Register extends Component {
     );
 }
 }
-export default Register;
+export default Signup;

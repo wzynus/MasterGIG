@@ -1,17 +1,15 @@
 
 export const Routes = {
     // pages
-    Presentation: { path: "/" },
-    DashboardOverview: { path: "/dashboard/overview" },
+    DashboardOverview: { path: "/" },
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
     Gigs: {path: "/gigs"},
-    Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Billing: { path: "/examples/billing" },
     Invoice: { path: "/examples/invoice" },
-    Signin: { path: "/examples/sign-in" },
-    Signup: { path: "/examples/sign-up" },
+    Signin: { path: "/sign-in" },
+    Signup: { path: "/sign-up" },
     ForgotPassword: { path: "/examples/forgot-password" },
     ResetPassword: { path: "/examples/reset-password" },
     Lock: { path: "/examples/lock" },
@@ -20,17 +18,9 @@ export const Routes = {
     Stream: {path: "/stream"},
     Video: {path: "/videos"},
     Message :{path: "/{userId}/message"},
+    Admin : {path: "/adminHomePage"},
 
-
-
-    // docs
-    DocsOverview: { path: "/documentation/overview" },
-    DocsDownload: { path: "/documentation/download" },
-    DocsQuickStart: { path: "/documentation/quick-start" },
-    DocsLicense: { path: "/documentation/license" },
-    DocsFolderStructure: { path: "/documentation/folder-structure" },
-    DocsBuild: { path: "/documentation/build-tools" },
-    DocsChangelog: { path: "/documentation/changelog" },
+   
 
     // components
     Accordions: { path: "/components/accordions" },

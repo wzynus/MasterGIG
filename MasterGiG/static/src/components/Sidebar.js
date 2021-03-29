@@ -108,7 +108,6 @@ export default (props = {}) => {
                 <NavItem title="Accordion" link={Routes.Accordions.path} />
                 <NavItem title="Alerts" link={Routes.Alerts.path} />
                 <NavItem title="Badges" link={Routes.Badges.path} />
-                <NavItem external title="Widgets" link="https://demo.themesberg.com/volt-pro-react/#/components/widgets" target="_blank" badgeText="Pro" />
                 <NavItem title="Breadcrumbs" link={Routes.Breadcrumbs.path} />
                 <NavItem title="Buttons" link={Routes.Buttons.path} />
                 <NavItem title="Forms" link={Routes.Forms.path} />
