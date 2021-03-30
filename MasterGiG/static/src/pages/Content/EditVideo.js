@@ -1,22 +1,8 @@
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as actionCreators from "../actions/auth";
 import { Card } from "material-ui/Card";
 import { CardMedia } from "material-ui/Card";
 import { TextField } from "material-ui/TextField";
 import { Link } from "react-router";
-
-function mapStateToProps(state) {
-  return {
-    isRegistering: state.auth.isRegistering,
-    registerStatusText: state.auth.registerStatusText,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
 
 const style = {
   marginTop: 50,
@@ -27,7 +13,7 @@ const style = {
   display: "inline-block",
   alignItems: "center",
 };
-@connect(mapStateToProps, mapDispatchToProps)
+
 class ContentOwner extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   constructor(props) {

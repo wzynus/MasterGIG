@@ -1,24 +1,12 @@
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as actionCreators from "../actions/auth";
-import { Card } from "material-ui/Card";
-import { CardMedia } from "material-ui/Card";
-import { Link } from "react-router";
-import { FlatButton } from "material-ui/FlatButton";
-
-function mapStateToProps(state) {
-  return {
-    isRegistering: state.auth.isRegistering,
-    registerStatusText: state.auth.registerStatusText,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+/* import { Card } from "material-ui/Card";
+import { CardMedia } from "material-ui/Card"; */
+import { Link } from "react-router-dom";
+import cat from "../../assets/img/cat.jpg";
 const styleBlur = {
-  filter: "blur(20px)",
+  filter: "blur(2px)",
   pointerEvents: "none",
   userSelect: "none",
 };
@@ -45,7 +33,7 @@ const pushForward = {
   textAlign: "center",
   border: "",
 };
-@connect(mapStateToProps, mapDispatchToProps)
+
 class ContentPremium extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -58,7 +46,7 @@ class ContentPremium extends React.Component {
       <div className="col-md-8">
         <Card style={style}>
           <div style={styleBlur}>
-            <img src="../src/assets/cat.jpg" alt="cat" />
+            <img src={cat} alt="cat" />
             <div>Lorem Ipsum</div>
           </div>
           <div style={pushForward}>Subscribe to view</div>

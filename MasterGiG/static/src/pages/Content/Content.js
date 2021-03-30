@@ -1,24 +1,13 @@
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as actionCreators from "../actions/auth";
-import { Card } from "material-ui/Card";
-import { CardMedia } from "material-ui/Card";
-import { Link } from "react-router";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+/* import { Card } from "material-ui/Card";
+import { CardMedia } from "material-ui/Card"; */
+import { Link } from "react-router-dom";
 import ContentFree from "./ContentFree";
 import ContentPremium from "./ContentPremium";
 import ContentOwner from "./ContentOwner";
 
-function mapStateToProps(state) {
-  return {
-    isRegistering: state.auth.isRegistering,
-    registerStatusText: state.auth.registerStatusText,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
-}
 const styleBlur = {
   filter: "blur(20px)",
 };
@@ -48,7 +37,7 @@ const pushForward = {
   width: "50%",
   textAlign: "center",
 };
-@connect(mapStateToProps, mapDispatchToProps)
+
 class Content extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   //If users is sub to the Content Creator, all vid are shown
@@ -61,6 +50,7 @@ class Content extends React.Component {
   render() {
     return (
       <div className="col-md-8">
+        <Link to="/video/upload">asd</Link>
         <h1>Content</h1>
         <ContentFree />
         <ContentPremium />

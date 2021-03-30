@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     POSTGRES_URL= '127.0.0.1:5432'
     POSTGRES_USER= 'postgres'
-    POSTGRES_PW = '123786'
+    POSTGRES_PW = 'password'
     POSTGRES_DB = 'mastergig'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
