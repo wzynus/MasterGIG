@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'
 
-import { Routes } from "../../routes";
-import BgImage from "../../assets/img/illustrations/signin.svg";
-import {login} from "../../utils/axios_restfulAPI";
+
+import { Routes } from "../routes";
+import BgImage from "../assets/img/illustrations/signin.svg";
+import {login} from "../utils/axios_restfulAPI";
+
 
 
 class Signin extends React.Component{
@@ -17,8 +18,8 @@ class Signin extends React.Component{
     this.state = {
       email: "",
       password: "",
-      designation: 0,//user,true if admin
-      loading: 0,
+      designation: false,//user,true if admin
+      loading: false,
       username: "",
       id: 0,
     };
@@ -26,7 +27,7 @@ class Signin extends React.Component{
   this.onSubmit = this.onSubmit.bind(this)
   }
 
-
+  
 
   onChange(e){
     this.setState({[e.target.name]: e.target.value})
@@ -34,6 +35,9 @@ class Signin extends React.Component{
 
   onSubmit(e){
     e.preventDefault();
+    this.setState({
+      loading: true
+    });
     const user = {
       email:this.state.email,
       password:this.state.password
@@ -41,33 +45,30 @@ class Signin extends React.Component{
     login(user).then(res =>{
       console.log(res)
       this.setState({
-        loading: true,
         id : res.data.id,
         username: res.data.username,
         designation: res.data.admin_status
-      })
-      if(!res.error && loading){
-        if (designation === False){
-          return (
-            <Redirect push to={{ pathname: "/homepage", state: { username, id } }} />
-          );
-
+      });
+      if(!res.error && this.state.loading){
+        if (this.state.designation === false){
+          this.props.history.push("/");
+          window.location.reload();
         }
         else{
-          return (
-            <Redirect push to={{ pathname: "/adminHompage", state: { username, id } }} />
-          );
-
-        }
-      
+          this.props.history.push("/adminHomePage");
+          window.location.reload();
+        }  
       }
-    }     
-  );
+    });
   }
+
+
+
   
 
 
   render() {
+    
     return(
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">

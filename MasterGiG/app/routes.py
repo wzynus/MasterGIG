@@ -5,7 +5,7 @@ from app.forms import LoginForm, RegistrationForm, UpdateProfileForm, ChangePass
 
 import time
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Message
+from app.models import UserEntity, Message
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
 
@@ -39,7 +39,7 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = UserEntity.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
@@ -57,7 +57,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = UserEntity(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         user.set_display_name(form.username.data)
         db.session.add(user)
@@ -124,7 +124,7 @@ def deactivateaccount():
         return redirect(url_for('index'))
     form = DeactivateAccountForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = UserEntity.query.filter_by(username=form.username.data).first()
         if not user.check_username(form.username.data):
             flash('Error: Username does not match account!')
             return redirect(url_for('myprofile'))
@@ -148,7 +148,7 @@ def newmessage():
     if form.validate_on_submit():
         s_name = current_user.display_name
         s_id = current_user.id
-        receiver = User.query.filter_by(username=form.receiver_name.data).first()
+        receiver = UserEntity.query.filter_by(username=form.receiver_name.data).first()
         r_id = receiver.id
         content = form.content.data
         msg = Message(body=content, sender_id=s_id, sender_name=s_name, receiver_id=r_id)
@@ -177,7 +177,7 @@ def inbox():
 def follow(username):
     form = EmptyForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
+        user = UserEntity.query.filter_by(username=username).first()
         if user is None:
             flash('User {} not found.'.format(username))
             return redirect(url_for('index'))
@@ -197,7 +197,7 @@ def follow(username):
 def unfollow(username):
     form = EmptyForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
+        user = UserEntity.query.filter_by(username=username).first()
         if user is None:
             flash('User {} not found.'.format(username))
             return redirect(url_for('index'))
@@ -216,7 +216,7 @@ def unfollow(username):
 def subscribe(username):
     form = EmptyForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
+        user = UserEntity.query.filter_by(username=username).first()
         if user is None:
             flash('User {} not found.'.format(username))
             return redirect(url_for('index'))
@@ -236,7 +236,7 @@ def subscribe(username):
 def unsubscribe(username):
     form = EmptyForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
+        user = UserEntity.query.filter_by(username=username).first()
         if user is None:
             flash('User {} not found.'.format(username))
             return redirect(url_for('index'))
@@ -266,7 +266,7 @@ def search():
     if not g.search_form.validate():
         return redirect(url_for('main.explore'))
     page = request.args.get('page', 1, type=int)
-    posts, total = User.search(g.search_form.q.data, page,
+    posts, total = UserEntity.search(g.search_form.q.data, page,
                                current_app.config['POSTS_PER_PAGE'])
     next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) \
         if total > page * current_app.config['POSTS_PER_PAGE'] else None
@@ -299,7 +299,7 @@ def get_user():
 @app.route("/api/create_user", methods=["POST"])
 def create_user():
     incoming = request.get_json()
-    user = User(
+    user = UserEntity(
         email=incoming["email"],
         password=incoming["password"]
     )
@@ -310,7 +310,7 @@ def create_user():
     except IntegrityError:
         return jsonify(message="User with that email already exists"), 409
 
-    new_user = User.query.filter_by(email=incoming["email"]).first()
+    new_user = UserEntity.query.filter_by(email=incoming["email"]).first()
 
     return jsonify(
         id=user.id,
@@ -321,7 +321,7 @@ def create_user():
 @app.route("/api/get_token", methods=["POST"])
 def get_token():
     incoming = request.get_json()
-    user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
+    user = UserEntity.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
         return jsonify(token=generate_token(user))
 

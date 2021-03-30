@@ -3,6 +3,8 @@ from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.search import add_to_index, remove_from_index, query_index
+import enum
+
 
 
 #from cloudinary.models import CloudinaryField
@@ -50,7 +52,8 @@ db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
 db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
 
 
-class User(UserMixin, SearchableMixin, db.Model):
+
+class UserEntity(UserMixin, SearchableMixin, db.Model):
     __searchable__ = ['username', 'display_name', 'bio']
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -121,17 +124,6 @@ class User(UserMixin, SearchableMixin, db.Model):
         self.active_status=False
         return
 
-    def follow(self, username):
-        if not self.is_following(username):
-            self.followed.append(username)
-
-    def unfollow(self, username):
-        if self.is_following(username):
-            self.followed.remove(username)
-
-    def is_following(self, username):
-        return self.followed.filter(followers.c.followed_id == username.id).count() > 0
-
     def subscribe(self, username):
         if not self.is_subscribing(username):
             self.subscribed.append(username)
@@ -151,10 +143,17 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+
+class MessageTypeEnum(enum.Enum):
+    Message = 1
+    Feedback = 2
+    Complaint = 3
+    Report = 4
 
 
 class Message(db.Model):
@@ -163,9 +162,9 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     sender_id = db.Column(db.Integer)
     sender_name = db.Column((db.String(64)))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     read_status = db.Column(db.Boolean, default=False)
-    category = db.Column(db.String)
+    category = db.Column(db.Enum(MessageTypeEnum))
     target_id = db.Column(db.Integer)
 
     def __repr__(self):
@@ -175,67 +174,10 @@ class Message(db.Model):
         self.read_status = True
 
 
-class GigType(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140))
-    description = db.Column(db.String(1000))
-    cost = db.Column(db.Integer)
-    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-    duration = db.Column(db.Interval)
-
-    def __repr__(self):
-        return '<GigType {}>'.format(self.title)
-
-
-class GigRequest(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    requester_id = db.Column(db.Integer)
-    content_creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    status = db.Column(db.String, default='pending')
-    start_time = db.Column(db.DateTime)
-    end_time = db.Column(db.DateTime)
-    gig_type = db.relationship('GigType', lazy='dynamic')
-
-    def __repr__(self):
-        return '<GigRequest {}>'.format(self.id)
-
-
-class GigEvent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    gig_request = db.relationship('GigRequest', lazy='dynamic')
-    requester_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    content_creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    status = db.Column(db.String, default='upcoming')
-
-    def __repr__(self):
-        return '<GigEvent {}>'.format(self.id)
-
-    def set_status_pending_feedback(self):
-        self.status = 'pending feedback'
-
-    def set_status_complete(self):
-        self.status = 'complete'
-
-
-class StreamEvent(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    title = db.Column(db.String)
-    description = db.Column(db.String)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    start_time = db.Column(db.DateTime)
-    end_time = db.Column(db.DateTime)
-
-    def __repr__(self):
-        return '<StreamEvent {}>'.format(self.title)
-
-
 class Subscriber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    subscriber_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    subscribed_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    subscriber_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    subscribed_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     is_paid = db.Column(db.Boolean, default=False)
     expiry_date = db.Column(db.DateTime)
     renew_status = db.Column(db.Boolean, default=False)
@@ -260,9 +202,68 @@ class Subscriber(db.Model):
             self.is_paid = True
 
 
+class GigType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
+    description = db.Column(db.String(1000))
+    cost = db.Column(db.Integer)
+    owner = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    duration = db.Column(db.Interval)
+
+    def __repr__(self):
+        return '<GigType {}>'.format(self.title)
+
+
+class GigRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    requester_id = db.Column(db.Integer)
+    content_creator_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    status = db.Column(db.String, default='pending')
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
+    gig_type = db.relationship('GigType', lazy='dynamic')
+
+    def __repr__(self):
+        return '<GigRequest {}>'.format(self.id)
+
+
+class GigEvent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    gig_request = db.relationship('GigRequest', lazy='dynamic')
+    requester_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    content_creator_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    status = db.Column(db.String, default='upcoming')
+
+    def __repr__(self):
+        return '<GigEvent {}>'.format(self.id)
+
+    def set_status_pending_feedback(self):
+        self.status = 'pending feedback'
+
+    def set_status_complete(self):
+        self.status = 'complete'
+
+
+class StreamEvent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    title = db.Column(db.String)
+    description = db.Column(db.String)
+    owner_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<StreamEvent {}>'.format(self.title)
+
+
+
+
 class VideoCategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     category_name = db.Column(db.String)
 
     def __repr__(self):
@@ -272,7 +273,7 @@ class VideoCategory(db.Model):
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     url = db.Column(db.String)
     title = db.Column(db.String)
     description = db.Column(db.String)
@@ -302,7 +303,7 @@ class Video(db.Model):
 class TopUpTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     amount = db.Column(db.Integer)
 
     def __repr__(self):
@@ -312,8 +313,8 @@ class TopUpTransaction(db.Model):
 class PaymentTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
+    receiver_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     amount = db.Column(db.Integer)
     description = db.Column(db.String)
 
@@ -321,18 +322,28 @@ class PaymentTransaction(db.Model):
         return '<PaymentTransaction {}>'.format(self.timestamp + ": " + self.description + ": " + self.amount)
 
 
+
+class NotificationTypeEnum(enum.Enum):
+    General = 1
+    Gig_notification = 2
+    Stream_notification = 3
+    Subscription_notification = 4
+    Transaction_notification = 5
+
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey(UserEntity.id))
     read_status = db.Column(db.Boolean, default=False)
-    category = db.Column(db.String)
+    category = db.Column(db.Enum(NotificationTypeEnum))
 
     def __repr__(self):
-        return '<Message {}>'.format(self.body)
+        return '<Notification {}>'.format(self.body)
+
 
 
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return UserEntity.query.get(int(id))
+
