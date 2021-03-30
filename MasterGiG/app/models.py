@@ -6,6 +6,7 @@ from app.search import add_to_index, remove_from_index, query_index
 import enum
 
 
+
 #from cloudinary.models import CloudinaryField
 
 class SearchableMixin(object):
@@ -49,6 +50,7 @@ class SearchableMixin(object):
 
 db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
 db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
+
 
 
 class UserEntity(UserMixin, SearchableMixin, db.Model):
@@ -170,6 +172,7 @@ class Message(db.Model):
 
     def set_read_status(self):
         self.read_status = True
+
 
 class Subscriber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -319,13 +322,13 @@ class PaymentTransaction(db.Model):
         return '<PaymentTransaction {}>'.format(self.timestamp + ": " + self.description + ": " + self.amount)
 
 
+
 class NotificationTypeEnum(enum.Enum):
     General = 1
     Gig_notification = 2
     Stream_notification = 3
     Subscription_notification = 4
     Transaction_notification = 5
-
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -339,8 +342,8 @@ class Notification(db.Model):
         return '<Notification {}>'.format(self.body)
 
 
+
 @login.user_loader
 def load_user(id):
     return UserEntity.query.get(int(id))
-
 
