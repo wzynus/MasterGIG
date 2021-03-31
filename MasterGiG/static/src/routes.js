@@ -21,6 +21,8 @@ export const Routes = {
   Message: { path: "/{userId}/message" },
   PlayVideo: { path: "/video/play" },
   UploadVideo: { path: "/video/upload" },
+  EditVideo: { path: "/video/edit" },
+  StreamInfo: { path: "/streamsinfo" },
 
   // docs
   DocsOverview: { path: "/documentation/overview" },

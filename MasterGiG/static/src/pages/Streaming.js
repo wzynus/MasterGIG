@@ -106,12 +106,12 @@ class Streaming extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("https://api.cloud.wowza.com/api/v1.6/live_streams/b8k7bksb/", {
+      .get("https://api.cloud.wowza.com/api/v1.6/live_streams/a436fa9f/", {
         headers: {
           "wsc-api-key":
-            "oudPq3We9AOUGCQvVWlMULJJPAZT015L2kJHGK9ZnupgmjkItWRjcuwUb0PO332c",
+            "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
           "wsc-access-key":
-            "e0UqPV7oLTwQANHc5DFrwI21tPhs2eQS56fsKbCZlwVaQVGqV0yX1VUwclSr3350",
+            "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
           "Content-Type": "application/json",
         },
       })
@@ -127,9 +127,9 @@ class Streaming extends React.Component {
               {
                 headers: {
                   "wsc-api-key":
-                    "oudPq3We9AOUGCQvVWlMULJJPAZT015L2kJHGK9ZnupgmjkItWRjcuwUb0PO332c",
+                    "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
                   "wsc-access-key":
-                    "e0UqPV7oLTwQANHc5DFrwI21tPhs2eQS56fsKbCZlwVaQVGqV0yX1VUwclSr3350",
+                    "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
                   "Content-Type": "application/json",
                 },
               }
@@ -158,7 +158,7 @@ class Streaming extends React.Component {
         {
           src:
             //
-            //https://cdn3.wowza.com/1/VmpxSVhmMmxrSXVa/b3FLZHl5/hls/live/playlist.m3u8
+            //https://cdn3.wowza.com/1/cmZ5MHlWMzVVNGRz/c3YxU1Zr/hls/live/playlist.m3u8
             "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
           type: "application/x-mpegURL",
         },

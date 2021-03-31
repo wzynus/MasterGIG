@@ -21,6 +21,8 @@ import Stream from "./Stream";
 import Content from "./Content/Content";
 import UploadVideo from "./Content/UploadVideo";
 import Video from "./Video";
+import EditVideo from "./Content/EditVideo";
+import StreamInfo from "./StreamInfo";
 
 // documentation pages
 import DocsOverview from "./documentation/DocsOverview";
@@ -172,6 +174,9 @@ export default () => (
     <RouteWithSidebar path={Routes.Videos.path} component={Content} />
     <RouteWithSidebar path={Routes.PlayVideo.path} component={Video} />
     <RouteWithSidebar path={Routes.UploadVideo.path} component={UploadVideo} />
+    <RouteWithSidebar path={Routes.EditVideo.path} component={EditVideo} />
+    <RouteWithSidebar path={Routes.StreamInfo.path} component={StreamInfo} />
+
     {/* components */}
     <RouteWithSidebar
       exact

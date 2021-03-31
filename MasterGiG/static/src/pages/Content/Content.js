@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import ContentFree from "./ContentFree";
 import ContentPremium from "./ContentPremium";
 import ContentOwner from "./ContentOwner";
-
+import { Button } from "@themesberg/react-bootstrap";
 const styleBlur = {
   filter: "blur(20px)",
 };
@@ -50,11 +50,19 @@ class Content extends React.Component {
   render() {
     return (
       <div className="col-md-8">
-        <Link to="/video/upload">asd</Link>
+        <Link to="/video/upload">
+          <Button variant="secondary" className="m-1">
+            Upload
+          </Button>
+        </Link>
+        <Link to="/video/edit">
+          <Button variant="secondary" className="m-1">
+            Edit
+          </Button>
+        </Link>
         <h1>Content</h1>
         <ContentFree />
         <ContentPremium />
-        <ContentOwner />
       </div>
     );
   }

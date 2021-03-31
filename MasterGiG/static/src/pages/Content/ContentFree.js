@@ -5,6 +5,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { CardMedia } from "material-ui/Card"; */
 import { Link } from "react-router-dom";
 import cat from "../../assets/img/cat.jpg";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
 
 const style = {
   marginTop: 50,
@@ -28,8 +31,7 @@ class ContentFree extends React.Component {
             <img src={cat} alt="cat" />
             <div>Lorem Ipsum</div>
             <br />
-            <div>like</div>
-            <div>dislike</div>
+            <div>like : 2 View : 2</div>
           </Card>
         </Link>
       </div>

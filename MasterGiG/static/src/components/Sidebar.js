@@ -187,6 +187,11 @@ export default (props = {}) => {
                 icon={faChartPie}
               />
               <NavItem
+                title="Stream Info"
+                link={Routes.StreamInfo.path}
+                icon={faChartPie}
+              />
+              <NavItem
                 title="Videos"
                 icon={faHandHoldingUsd}
                 link={Routes.Videos.path}

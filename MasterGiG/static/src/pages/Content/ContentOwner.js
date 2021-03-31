@@ -4,6 +4,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 /* import { Card } from "material-ui/Card";
 import { CardMedia } from "material-ui/Card"; */
 import { Link } from "react-router-dom";
+import cat from "../../assets/img/cat.jpg";
 
 const style = {
   marginTop: 50,
@@ -25,16 +26,14 @@ class ContentOwner extends React.Component {
   render() {
     return (
       <div className="col-md-8">
-        <Link to="/video">
-          <Card style={style}>
-            <img src="../../src/assets/cat.jpg" alt="cat" />
-            <div>Lorem Ipsum</div>
-            <br />
-            <Link to="/edit">
-              <button> Edit</button>
-            </Link>
-          </Card>
-        </Link>
+        <Card style={style}>
+          <img src={cat} alt="cat" />
+          <div>Lorem Ipsum</div>
+          <br />
+          <Link to="/video/upload">
+            <button> Edit</button>
+          </Link>
+        </Card>
       </div>
     );
   }

@@ -44,13 +44,15 @@ class ContentPremium extends React.Component {
   render() {
     return (
       <div className="col-md-8">
-        <Card style={style}>
-          <div style={styleBlur}>
-            <img src={cat} alt="cat" />
-            <div>Lorem Ipsum</div>
-          </div>
-          <div style={pushForward}>Subscribe to view</div>
-        </Card>
+        <Link to="/dashboard/overview">
+          <Card style={style}>
+            <div style={styleBlur}>
+              <img src={cat} alt="cat" />
+              <div>Lorem Ipsum</div>
+            </div>
+            <div style={pushForward}>Subscribe to view</div>
+          </Card>
+        </Link>
       </div>
     );
   }
