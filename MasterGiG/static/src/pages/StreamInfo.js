@@ -21,10 +21,13 @@ const configStop = {
       "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
   },
 };
+
 class StreamInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = { stream: {}, state: "" };
+    this.startStream = this.startStream.bind(this);
+    this.stopStream = this.stopStream.bind(this);
   }
   getState = () => {
     axios
@@ -76,23 +79,6 @@ class StreamInfo extends React.Component {
       return;
     };
   }
-
-  startandStopStream() {
-    if (this.state.state === "stopped") {
-      return (
-        <Button variant="secondary" onClick={this.startStream} className="m-1">
-          Start Stream
-        </Button>
-      );
-    } else {
-      return (
-        <Button variant="secondary" onClick={this.stopStream} className="m-1">
-          Stop Stream
-        </Button>
-      );
-    }
-  }
-
   stopStream() {
     axios(configStop)
       .then(function(response) {
@@ -101,9 +87,11 @@ class StreamInfo extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
-    /*    setTimeout(() => {
+    this.setState({ state: "loading" });
+    setTimeout(() => {
       this.setState({ state: "stopped" });
-    }, 20000); */
+      console.log(this.state.state);
+    }, 5000);
   }
   startStream() {
     axios(configStart)
@@ -113,10 +101,30 @@ class StreamInfo extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
-    /*  setTimeout(() => {
+    this.setState({ state: "loading" });
+    setTimeout(() => {
       this.setState({ state: "started" });
-    }, 20000); */
+      console.log(this.state.state);
+    }, 20000);
   }
+  startandStopStream() {
+    if (this.state.state === "stopped") {
+      return (
+        <Button variant="secondary" onClick={this.startStream} className="m-1">
+          Start Stream
+        </Button>
+      );
+    } else if (this.state.state === "started") {
+      return (
+        <Button variant="secondary" onClick={this.stopStream} className="m-1">
+          Stop Stream
+        </Button>
+      );
+    } else {
+      return <div>Loading...</div>;
+    }
+  }
+
   render() {
     return (
       <div>
