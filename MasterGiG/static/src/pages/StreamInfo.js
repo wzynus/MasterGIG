@@ -3,22 +3,22 @@ import axios from "axios";
 import { Button } from "@themesberg/react-bootstrap";
 const configStart = {
   method: "put",
-  url: "https://api.cloud.wowza.com/api/v1.6/live_streams/b8k7bksb/start",
+  url: "https://api.cloud.wowza.com/api/v1.6/live_streams/7gr8111f/start",
   headers: {
     "wsc-api-key":
-      "oudPq3We9AOUGCQvVWlMULJJPAZT015L2kJHGK9ZnupgmjkItWRjcuwUb0PO332c",
+      "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
     "wsc-access-key":
-      "e0UqPV7oLTwQANHc5DFrwI21tPhs2eQS56fsKbCZlwVaQVGqV0yX1VUwclSr3350",
+      "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
   },
 };
 const configStop = {
   method: "put",
-  url: "https://api.cloud.wowza.com/api/v1.6/live_streams/b8k7bksb/stop",
+  url: "https://api.cloud.wowza.com/api/v1.6/live_streams/7gr8111f/stop",
   headers: {
     "wsc-api-key":
-      "oudPq3We9AOUGCQvVWlMULJJPAZT015L2kJHGK9ZnupgmjkItWRjcuwUb0PO332c",
+      "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
     "wsc-access-key":
-      "e0UqPV7oLTwQANHc5DFrwI21tPhs2eQS56fsKbCZlwVaQVGqV0yX1VUwclSr3350",
+      "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
   },
 };
 class StreamInfo extends React.Component {
@@ -26,14 +26,71 @@ class StreamInfo extends React.Component {
     super(props);
     this.state = { stream: {}, state: "" };
   }
+  getState = () => {
+    axios
+      .get("https://api.cloud.wowza.com/api/v1.6/live_streams/7gr8111f/state", {
+        headers: {
+          "wsc-api-key":
+            "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
+          "wsc-access-key":
+            "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(
+        (response) => {
+          this.setState({ state: response.data.live_stream.state });
+          console.log(this.state.state);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+  componentDidMount() {
+    axios
+      .get("https://api.cloud.wowza.com/api/v1.6/live_streams/7gr8111f/", {
+        headers: {
+          "wsc-api-key":
+            "dUeSULaOszb0vnqj7kLQM2j6v433hfC4O1UIcGum8ZNrZgiSDhhKIznA2oOc3400",
+          "wsc-access-key":
+            "8ljLDHLBH5A45FQTu6L48MT8RRPl3Qo6FlR46tbJHTy6KpJ6Vhn46ozIQGKg2f15",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(
+        (response) => {
+          console.log(response);
+          this.setState({
+            stream: response.data.live_stream.source_connection_information,
+          });
+          this.getState();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
   startandStopStream() {
-    // if (this.state.state === "stopped") {
-    return (
-      <Button variant="secondary" onClick={this.createStream} className="m-1">
-        Start
-      </Button>
-    );
-    // }
+    if (this.state.state === "stopped") {
+      return (
+        <Button variant="secondary" onClick={this.startStream} className="m-1">
+          Start Stream
+        </Button>
+      );
+    } else {
+      return (
+        <Button variant="secondary" onClick={this.stopStream} className="m-1">
+          Stop Stream
+        </Button>
+      );
+    }
   }
 
   stopStream() {
@@ -44,6 +101,9 @@ class StreamInfo extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+    /*    setTimeout(() => {
+      this.setState({ state: "stopped" });
+    }, 20000); */
   }
   startStream() {
     axios(configStart)
@@ -53,6 +113,9 @@ class StreamInfo extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+    /*  setTimeout(() => {
+      this.setState({ state: "started" });
+    }, 20000); */
   }
   render() {
     return (
