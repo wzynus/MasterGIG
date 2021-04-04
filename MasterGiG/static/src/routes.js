@@ -23,6 +23,7 @@ export const Routes = {
   UploadVideo: { path: "/video/upload" },
   EditVideo: { path: "/video/edit" },
   StreamInfo: { path: "/streamsinfo" },
+  SearchResult: { path: "/search/:query" },
 
   // docs
   DocsOverview: { path: "/documentation/overview" },
