@@ -18,6 +18,7 @@ import NotFoundPage from "./examples/NotFound";
 import ServerError from "./examples/ServerError";
 import Gig from "./Gigs/GiGHomeContentCreator"
 import Stream from "./Stream"
+import AdminHomePage from "./AdminHomePage";
 
 // components
 import Sidebar from "../components/Sidebar";
@@ -111,6 +112,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar path={Routes.Gigs.path} component={Gig}/>
     <RouteWithSidebar path={Routes.Stream.path} component={Stream}/>
+    <RouteWithSidebar path={Routes.Admin.path} component={AdminHomePage}/>
 
 
     {/* components */}
