@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBoxOpen, faBroadcastTower, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faUserAlt, faUserAltSlash } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -79,44 +79,34 @@ export default (props = {}) => {
         </Navbar.Toggle>
       </Navbar>
       <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
-        <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
+        <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`} style={{maxWidth:350}}>
           <div className="sidebar-inner px-4 pt-3">
-            <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
-              <div className="d-flex align-items-center">
-                <div className="user-avatar lg-avatar me-4">
-                  <Image src={ProfilePicture} className="card-img-top rounded-circle border-white" />
-                </div>
-                <div className="d-block">
-                  <h6>Welcome to MasterGiG</h6>
-                  <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark">
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
-                  </Button>
-                </div>
-              </div>
-              <Nav.Link className="collapse-close d-md-none" onClick={onCollapse}>
-                <FontAwesomeIcon icon={faTimes} />
-              </Nav.Link>
-            </div>
+            
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem title="MasterGiG" link={Routes.DashboardOverview.path} image={Logo} />
-              <NavItem title="Streams" link={Routes.Stream.path} icon={faChartPie} />
 
-              <CollapsableNavItem eventKey="components/" title="User Accounts Management" icon={faBoxOpen}>
-                <NavItem title="View All Users" link={Routes.DashboardOverview.path} />
-                <NavItem title="View User" link={Routes.DashboardOverview.path} />
-                <NavItem title="Ban User" link={Routes.DashboardOverview.path} />
-                <NavItem title="Unban User" link={Routes.DashboardOverview.path} />
-                <NavItem title="Delete User Account" link={Routes.DashboardOverview.path} />
-                <NavItem title="Delete User Video" link={Routes.DashboardOverview.path} />
+              <CollapsableNavItem eventKey="admin/" title="User Account Management" icon={faUser}>
+                <NavItem title="View All Users" link={Routes.Accordions.path} />
+                <NavItem title="View User" link={Routes.Accordions.path} />
+                <NavItem title="Ban User" link={Routes.Accordions.path} />
+                <NavItem title="Unban User" link={Routes.Accordions.path} />
+                <NavItem title="Delete User Account" link={Routes.Accordions.path} />
+                <NavItem title="Delete User Video" link={Routes.Accordions.path} />
               </CollapsableNavItem>
             
-              <CollapsableNavItem eventKey="components/" title="Feedback and Report" icon={faBoxOpen}>
-                <NavItem title="View All Feedbacks" link={Routes.DashboardOverview.path} />
-                <NavItem title="View Feedback" link={Routes.DashboardOverview.path} />
-                <NavItem title="View All Reports" link={Routes.DashboardOverview.path} />
-                <NavItem title="View Report" link={Routes.DashboardOverview.path} />
+              <CollapsableNavItem eventKey="admin/" title="Feedback and Report" icon={faBoxOpen}>
+                <NavItem title="View All Feedbacks" link={Routes.Accordions.path} />
+                <NavItem title="View Feedback" link={Routes.Accordions.path} />
+                <NavItem title="View All Reports" link={Routes.Accordions.path} />
+                <NavItem title="View Report" link={Routes.Accordions.path} />
               </CollapsableNavItem>
 
+              <CollapsableNavItem eventKey="admin/" title="Broadcast Management" icon={faBroadcastTower}>
+                <NavItem title="View All Feedbacks" link={Routes.Accordions.path} />
+                <NavItem title="View Feedback" link={Routes.Accordions.path} />
+                <NavItem title="View All Reports" link={Routes.Accordions.path} />
+                <NavItem title="View Report" link={Routes.Accordions.path} />
+              </CollapsableNavItem>
 
             </Nav>
           </div>

@@ -25,12 +25,14 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "react-datetime/css/react-datetime.css";
 
 import HomePage from "./pages/HomePage";
+import AdminHomePage from "./pages/AdminHomePage";
 import ScrollToTop from "./components/ScrollToTop";
 
 ReactDOM.render(
   <HashRouter>
     <ScrollToTop />
-    <HomePage />
+    <AdminHomePage />
+    {/* <HomePage /> */}
   </HashRouter>,
   document.getElementById("root")
 );
