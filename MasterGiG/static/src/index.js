@@ -15,22 +15,48 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
+import { Provider } from 'react-redux'
+import configureStore from './store';
 
 // core styles
 import "./scss/volt.scss";
+
+
 
 // vendor styles
 import "@fortawesome/fontawesome-free/css/all.css";
 import "react-datetime/css/react-datetime.css";
 
-import HomePage from "./pages/HomePage";
+
+import App from './App';
 import ScrollToTop from "./components/ScrollToTop";
 
-ReactDOM.render(
-  <HashRouter>
-    <ScrollToTop />
-    <HomePage />
-  </HashRouter>,
+
+
+const store = configureStore();
+
+if (process.env.NODE_ENV !== 'production') {
+
+  window.store = store;
+
+}
+
+const history = createBrowserHistory();
+
+function Root() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
+
+ReactDOM.render(  
+    <Router history={history}>
+      <ScrollToTop />
+      <Root/>
+    </Router>,
   document.getElementById("root")
 );

@@ -172,3 +172,4 @@ export const GeneralInfoForm = () => {
     </Card>
   );
 };
+export default GeneralInfoForm;

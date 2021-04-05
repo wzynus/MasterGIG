@@ -1,1 +1,0 @@
-# Handle gig entity 

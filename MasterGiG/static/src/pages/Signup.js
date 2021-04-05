@@ -1,55 +1,69 @@
 
-import React from "react";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signupUser } from "../store/session";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
-
 import { Routes } from "../routes";
 import BgImage from "../assets/img/illustrations/signin.svg";
-import {register} from "../utils/axios_restfulAPI";
 
-class Signup extends React.Component {
-  constructor() {
-    super()
-    this.state={
-      email:"",
-      username:"",
-      password: "",
-      cpassword: "",
-      bio: "",
-      dob: "",
-      profilePicture: ""//not yet done
+const Signup = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [bio, setBio] = useState("");
+  const [dob, setDob] = useState("");
+  const [profilePicUrl, setPriofilePicUrl] = useState("");
+ 
+
+  const onSignUp = async (e) => {
+    e.preventDefault();
+    if (password === repeatPassword) {
+      dispatch(signupUser(username, email, password, bio, dob,  profilePicUrl));
     }
-    this.onChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+  };
+
+  const updateUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+
+  const updateEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const updatePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const updateRepeatPassword = (e) => {
+    setRepeatPassword(e.target.value);
+  };
+
+  const updateBio = (e) => {
+    setBio(e.target.value);
+  };
+
+  const updatedob = (e) => {
+    setDob(e.target.value);
+  };
+
+  const updateProfilePicUrl = (e) => {
+    setPriofilePicUrl(e.target.value);
+  };
+
+  if (user) {
+    return <Redirect to="/" />;
   }
 
-  
-  handleChange(e){
-    this.setState({
-      value: e.currentTarget.value
-    });
-  }
-
-  onSubmit(e){
-    e.preventDefault()
-    const newUser = {
-      email: this.state.email,
-      username: this.state.username,
-      password:this.state.password,
-      bio : this.state.bio,
-      dob: this.state.dob
-
-    }
-    register(newUser).then(res => {
-        this.props.history.push('/login')
-    })
-  }
-  render(){
     return(
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -65,23 +79,23 @@ class Signup extends React.Component {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Create an account</h3>
                 </div>
-                <Form className="mt-4"  onSubmit={this.onSubmit}>
+                <Form className="mt-4"  onSubmit={onSignUp}>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your Email</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com"  value = {this.state.email} onChange ={(e)=>this.handleChange}/>
+                      <Form.Control autoFocus required type="email" placeholder="example@company.com"  value = {email} onChange ={updateEmail}/>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="username" className="mb-4">
-                  <Form.Label>Your Email</Form.Label>
+                  <Form.Label>Your Username</Form.Label>
                   <InputGroup>
                     <InputGroup.Text>
                       <FontAwesomeIcon icon={faEnvelope} />
                     </InputGroup.Text>
-                    <Form.Control autoFocus placeholder="unique username" value = {this.state.username} onChange={(e)=>this.handleChange}/>
+                    <Form.Control autoFocus placeholder="unique username" value = {username} onChange={updateUsername}/>
                   </InputGroup>
                 </Form.Group>
                   <Form.Group id="password" className="mb-4">
@@ -90,7 +104,7 @@ class Signup extends React.Component {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Password" value = {this.state.password} onChange = {(e)=>this.handleChange} />
+                      <Form.Control required type="password" placeholder="Password" value = {password} onChange = {updatePassword} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
@@ -99,7 +113,7 @@ class Signup extends React.Component {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Confirm Password" value = {this.state.cpassword} onChange = {(e)=>this.handleChange} />
+                      <Form.Control required type="password" placeholder="Confirm Password" value = {repeatPassword} onChange = {updateRepeatPassword} required = {true} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="bio" className="mb-4">
@@ -108,24 +122,33 @@ class Signup extends React.Component {
                     <InputGroup.Text>
                       <FontAwesomeIcon icon={faUnlockAlt} />
                     </InputGroup.Text>
-                    <Form.Control  placeholder="Write a brief description about yourself" value = {this.state.bio} onChange = {(e)=>this.handleChange} />
+                    <Form.Control  placeholder="Write a brief description about yourself" value = {bio} onChange = {updateBio} />
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group id="profilePicUrl" className="mb-4">
+                  <Form.Label>Upload picture </Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faUnlockAlt} />
+                    </InputGroup.Text>
+                    <Form.Control  placeholder="Key in your picture url here" value = {profilePicUrl} onChange = {updateProfilePicUrl} />
                   </InputGroup>
                 </Form.Group>
                 <Form.Group id="Date of birth">
                 <Form.Label>Birthday</Form.Label>
                 <Datetime
                   timeFormat={false}
-                  onChange={this.onChange}
+                  onChange={setDob}
                   renderInput={(props, openCalendar) => (
                     <InputGroup>
                       <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
                       <Form.Control
                         required
                         type="text"
-                        value={this.state.dob ? moment(this.state.dob).format("MM/DD/YYYY") : "Your birthday"}
+                        value={dob ? moment(dob).format("MM/DD/YYYY") : "Your birthday"}
                         placeholder="mm/dd/yyyy"
                         onFocus={openCalendar}
-                        onChange={(e)=>this.handleChange} />
+                        onChange={updatedob} />
                     </InputGroup>
                   )} />
               </Form.Group>
@@ -155,6 +178,6 @@ class Signup extends React.Component {
       </section>
     </main>
     );
-}
-}
+};
+
 export default Signup;

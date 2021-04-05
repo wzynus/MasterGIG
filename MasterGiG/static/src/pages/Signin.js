@@ -1,75 +1,46 @@
 
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
-
-
+import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from 'nanoid';
 import { Routes } from "../routes";
 import BgImage from "../assets/img/illustrations/signin.svg";
-import {login} from "../utils/axios_restfulAPI";
+import { loginUser } from "../store/session";
 
+const Signin = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
+  const [errors, setErrors] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-
-class Signin extends React.Component{
-  constructor(){
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      designation: false,//user,true if admin
-      loading: false,
-      username: "",
-      id: 0,
-    };
-  this.onChange = this.onChange.bind(this)
-  this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  
-
-  onChange(e){
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  onSubmit(e){
+  const onLogin = async (e) => {
     e.preventDefault();
-    this.setState({
-      loading: true
-    });
-    const user = {
-      email:this.state.email,
-      password:this.state.password
+    dispatch(loginUser(email, password));
+    if (user && user.errors) {
+      setErrors(user.errors);
     }
-    login(user).then(res =>{
-      console.log(res)
-      this.setState({
-        id : res.data.id,
-        username: res.data.username,
-        designation: res.data.admin_status
-      });
-      if(!res.error && this.state.loading){
-        if (this.state.designation === false){
-          this.props.history.push("/");
-          window.location.reload();
-        }
-        else{
-          this.props.history.push("/adminHomePage");
-          window.location.reload();
-        }  
-      }
-    });
+  };
+
+  const updateEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const updatePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  if (user) {
+    return <Redirect to="/UserHomePage" />;
   }
 
 
 
   
-
-
-  render() {
-    
-    return(
+  return(
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
@@ -83,12 +54,17 @@ class Signin extends React.Component{
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Sign in to MasterGiG</h3>
+                  <div>
+                 {errors.map((error) => (
+                 <div key={nanoid()}>{error}</div>
+                 ))}
                 </div>
-                <Form className="mt-4"  onSubmit={this.onSubmit}>
+                </div>
+                <Form className="mt-4"  onSubmit={onLogin}>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your email</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text value={this.state.email} onChange={this.onChange}>
+                      <InputGroup.Text value={email} onChange={updateEmail}>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
                       <Form.Control autoFocus required type="email" placeholder="example@company.com" />
@@ -98,7 +74,7 @@ class Signin extends React.Component{
                     <Form.Group id="password" className="mb-4">
                       <Form.Label>Your Password</Form.Label>
                       <InputGroup>
-                        <InputGroup.Text>
+                        <InputGroup.Text value ={password} onChange={updatePassword}>
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
                         <Form.Control required type="password" placeholder="Password" />
@@ -132,7 +108,7 @@ class Signin extends React.Component{
       </section>
     </main>
     );
-  }
 }
+
 
 export default Signin;

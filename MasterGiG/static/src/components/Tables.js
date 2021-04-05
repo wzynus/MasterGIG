@@ -344,3 +344,5 @@ export const CommandsTable = () => {
     </Card>
   );
 };
+
+export default CommandsTable;

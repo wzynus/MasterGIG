@@ -1,24 +1,32 @@
-
-export const Routes = {
+ 
+ 
+ 
+ export const Routes = {
     // pages
     DashboardOverview: { path: "/" },
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
     Gigs: {path: "/gigs"},
     BootstrapTables: { path: "/tables/bootstrap-tables" },
-    Billing: { path: "/examples/billing" },
-    Invoice: { path: "/examples/invoice" },
-    Signin: { path: "/sign-in" },
-    Signup: { path: "/sign-up" },
-    ForgotPassword: { path: "/examples/forgot-password" },
-    ResetPassword: { path: "/examples/reset-password" },
-    Lock: { path: "/examples/lock" },
-    NotFound: { path: "/examples/404" },
-    ServerError: { path: "/examples/500" },
+    Billing: { path: "/billing" },
+    Invoice: { path: "/invoice" },
+    Signin: { path: "/login" },
+    Signup: { path: "/register" },
+    ForgotPassword: { path: "/forgot-password" },
+    ResetPassword: { path: "/reset-password" },
+    Lock: { path: "/lock" },
+    NotFound: { path: "/404" },
+    ServerError: { path: "/500" },
     Stream: {path: "/stream"},
     Video: {path: "/videos"},
     Message :{path: "/{userId}/message"},
     Admin : {path: "/adminHomePage"},
+    UserHomePage : {path: "/UserHomePage"},
+    PlayVideo: { path: "/video/play" },
+    UploadVideo: { path: "/video/upload" },
+    EditVideo: { path: "/video/edit" },
+    StreamInfo: { path: "/streamsinfo" },
+
 
    
 
@@ -42,3 +50,7 @@ export const Routes = {
     Toasts: { path: "/components/toasts" },
     WidgetsComponent: { path: "/components/widgets" }
 };
+
+
+
+export default Routes;  
