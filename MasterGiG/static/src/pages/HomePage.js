@@ -157,7 +157,7 @@ export default () => (
     />
     <RouteWithSidebar path={Routes.Gigs.path} component={Gig} />
     <RouteWithSidebar path={Routes.Stream.path} component={Stream} />
-    <RouteWithSidebar path={Routes.Videos.path} component={Content} />
+    <RouteWithSidebar path={Routes.Video.path} component={Content} />
     <RouteWithSidebar path={Routes.PlayVideo.path} component={Video} />
     <RouteWithSidebar path={Routes.UploadVideo.path} component={UploadVideo} />
     <RouteWithSidebar path={Routes.EditVideo.path} component={EditVideo} />

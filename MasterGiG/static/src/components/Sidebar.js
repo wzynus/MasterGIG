@@ -199,7 +199,7 @@ export default (props = {}) => {
               <NavItem
                 title="Videos"
                 icon={faHandHoldingUsd}
-                link={Routes.Videos.path}
+                link={Routes.Video.path}
               />
               <NavItem
                 title="Gigs"
