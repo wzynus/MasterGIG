@@ -296,7 +296,6 @@ class Video(db.Model):
         else:
             self.is_free = True
 
-
 class TopUpTransaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -319,13 +318,13 @@ class PaymentTransaction(db.Model):
         return '<PaymentTransaction {}>'.format(self.timestamp + ": " + self.description + ": " + self.amount)
 
 
+
 class NotificationTypeEnum(enum.Enum):
     General = 1
     Gig_notification = 2
     Stream_notification = 3
     Subscription_notification = 4
     Transaction_notification = 5
-
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -339,8 +338,9 @@ class Notification(db.Model):
         return '<Notification {}>'.format(self.body)
 
 
+
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return UserEntity.query.get(int(id))
 
 

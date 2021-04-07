@@ -211,6 +211,28 @@ export default (props = {}) => {
                 icon={faCog}
                 link={Routes.Message.path}
               />
+              <CollapsableNavItem
+                eventKey="components/"
+                title="Components"
+                icon={faBoxOpen}
+              >
+                <NavItem title="Accordion" link={Routes.Accordions.path} />
+                <NavItem title="Alerts" link={Routes.Alerts.path} />
+                <NavItem title="Badges" link={Routes.Badges.path} />
+                <NavItem title="Breadcrumbs" link={Routes.Breadcrumbs.path} />
+                <NavItem title="Buttons" link={Routes.Buttons.path} />
+                <NavItem title="Forms" link={Routes.Forms.path} />
+                <NavItem title="Modals" link={Routes.Modals.path} />
+                <NavItem title="Navbars" link={Routes.Navbars.path} />
+                <NavItem title="Navs" link={Routes.Navs.path} />
+                <NavItem title="Pagination" link={Routes.Pagination.path} />
+                <NavItem title="Popovers" link={Routes.Popovers.path} />
+                <NavItem title="Progress" link={Routes.Progress.path} />
+                <NavItem title="Tables" link={Routes.Tables.path} />
+                <NavItem title="Tabs" link={Routes.Tabs.path} />
+                <NavItem title="Toasts" link={Routes.Toasts.path} />
+                <NavItem title="Tooltips" link={Routes.Tooltips.path} />
+              </CollapsableNavItem>
             </Nav>
           </div>
         </SimpleBar>
