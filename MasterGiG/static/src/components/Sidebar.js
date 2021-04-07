@@ -192,6 +192,11 @@ export default (props = {}) => {
                 icon={faChartPie}
               />
               <NavItem
+                title="Analytics"
+                link={Routes.Analytics.path}
+                icon={faChartPie}
+              />
+              <NavItem
                 title="Videos"
                 icon={faHandHoldingUsd}
                 link={Routes.Videos.path}

@@ -78,7 +78,7 @@ export default (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    history.push(`/search/${value}`);
+    history.replace(`/search/${value}`);
   };
   const handleKeypress = (e) => {
     if (e.keyCode === 13) {

@@ -24,6 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Form } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import { uploadVideo } from "../../utils/http_functions";
 class UploadVideo extends React.Component {
   constructor(props) {
     super(props);
@@ -88,9 +89,6 @@ class UploadVideo extends React.Component {
                             Choose Thumbnail
                           </div>
                           {this.showThumbnailName()}
-                          {/*                     <div className="text-gray small">
-                      JPG, GIF or PNG. Max size of 800K
-                    </div> */}
                         </div>
                       </div>
                     </div>
@@ -100,7 +98,11 @@ class UploadVideo extends React.Component {
             </Card>
           </Form>
           <Link to="/video/upload">
-            <Button variant="secondary" className="m-1">
+            <Button
+              variant="secondary"
+              className="m-1"
+              onClick={this.handleSubmit}
+            >
               Upload
             </Button>
           </Link>
@@ -111,6 +113,15 @@ class UploadVideo extends React.Component {
   onUploadImage = (e) => {
     console.log(e.target.files[0]);
     this.setState({ thumbnail: e.target.files[0] });
+  };
+  handleSubmit = () => {
+    uploadVideo
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   render() {
     return (
@@ -134,9 +145,6 @@ class UploadVideo extends React.Component {
                   <div className="d-md-block text-start">
                     <div className="fw-normal text-dark mb-1">Choose Video</div>
                     {this.showVideoName()}
-                    {/*                     <div className="text-gray small">
-                      JPG, GIF or PNG. Max size of 800K
-                    </div> */}
                   </div>
                 </div>
               </div>

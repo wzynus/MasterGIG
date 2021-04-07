@@ -24,6 +24,7 @@ import Video from "./Video";
 import EditVideo from "./Content/EditVideo";
 import StreamInfo from "./StreamInfo";
 import SearchResult from "./SearchResult";
+import ContentAnalytics from "./Content/ContentAnalytics";
 
 // documentation pages
 import DocsOverview from "./documentation/DocsOverview";
@@ -181,7 +182,10 @@ export default () => (
       path={Routes.SearchResult.path}
       component={SearchResult}
     />
-
+    <RouteWithSidebar
+      path={Routes.Analytics.path}
+      component={ContentAnalytics}
+    />
     {/* components */}
     <RouteWithSidebar
       exact

@@ -24,6 +24,7 @@ export const Routes = {
   EditVideo: { path: "/video/edit" },
   StreamInfo: { path: "/streamsinfo" },
   SearchResult: { path: "/search/:query" },
+  Analytics: { path: "/video/analytics" },
 
   // docs
   DocsOverview: { path: "/documentation/overview" },
