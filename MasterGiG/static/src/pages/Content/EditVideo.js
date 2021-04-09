@@ -38,7 +38,7 @@ const pushForward = {
   textAlign: "center",
 };
 
-class Content extends React.Component {
+class EditVideo extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   //If users is sub to the Content Creator, all vid are shown
   //If not, premium are locked
@@ -58,4 +58,4 @@ class Content extends React.Component {
   }
 }
 
-export default Content;
+export default EditVideo;
