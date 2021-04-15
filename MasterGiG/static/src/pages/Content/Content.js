@@ -4,7 +4,8 @@ import ContentFree from "./ContentFree";
 import ContentPremium from "./ContentPremium";
 import ContentOwner from "./ContentOwner";
 import { Button } from "@themesberg/react-bootstrap";
-import API from "../../utils/axios_restfulAPI";
+import { login, uploadVideo } from "../../utils/axios_restfulAPI";
+import axios from "axios";
 const styleBlur = {
   filter: "blur(20px)",
 };
@@ -44,7 +45,6 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <div className="col-md-8">
@@ -58,9 +58,6 @@ class Content extends React.Component {
             Edit
           </Button>
         </Link>
-        {/*         <Button variant="secondary" className="m-1" onClick={API.uploadVideo()}>
-          Upload
-        </Button> */}
         <h1>Content</h1>
         <ContentFree />
         <ContentPremium />

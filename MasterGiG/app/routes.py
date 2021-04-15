@@ -8,9 +8,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import UserEntity, Message
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
-
+from flask_cors import CORS, cross_origin
 
 @app.route('/')
+@cross_origin()
 @app.route('/index')
 def index():
     user = current_user
@@ -339,12 +340,19 @@ def is_token_valid():
         return jsonify(token_is_valid=False), 403
 
 #added new
-
+'''
 @app.route('/api/uploadVideo', methods=['POST'])
 def upload_video():
     print('a')
-    '''
+
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
         uploaded_file.save(uploaded_file.filename)
     return redirect(url_for('index')) '''
+@app.route('/api/uploadVideo', methods=['POST'])
+@cross_origin() 
+def upload_video():
+   request_data = request.get_json()
+   print(request_data)
+   app.logger.info('Info level log')
+   return {'hello': 'world'}

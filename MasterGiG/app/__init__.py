@@ -4,9 +4,10 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from config import Config
 from flask_login import LoginManager
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from logging.config import dictConfig
 
 from elasticsearch import Elasticsearch
 
@@ -15,7 +16,11 @@ from elasticsearch import Elasticsearch
 
 app = Flask(__name__,static_folder="./static/dist", template_folder="./static")
 app.config.from_object(Config)
-CORS(app)
+#CORS(app)
+app.logger.info('Info level log')
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS()  
+#cors.init_app(app, resources={r"*": {"origins": "*"}})
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -34,4 +39,4 @@ def create_db():
 app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
 
-from app import  models, UserController
+from app import  models, UserController, ContentController

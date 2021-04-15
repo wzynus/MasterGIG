@@ -87,9 +87,14 @@ export const login = (user) => {
 
 export const uploadVideo = (video) => {
   return axios
-    .post(API_URL + "/api/uploadVideo", {
+    .post(API_URL + "/uploadVideo", {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      selectedFile: video.selectedFile,
       title: video.title,
       description: video.description,
+      thumbnail: video.thumbnail,
     })
     .then((res) => {
       return res.data;

@@ -40,3 +40,4 @@ def login():
     else:
         result = jsonify({"error": "Invalid username and password"})
     return result
+

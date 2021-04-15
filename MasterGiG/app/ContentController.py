@@ -8,12 +8,22 @@ from app.models import UserEntity
 
 
 
+'''
 @app.route('/api/uploadVideo', methods=['POST'])
+@cross_origin() 
 def upload_video():
+   request_data = request.get_json()
+   print(request_data)
+   return {'hello': 'world'}'''
+@app.route('/api/uploadVideo', methods=['POST'])
+#@cross_origin() 
+def upload_video():
+   data = request.json
+   request_data = request.get_json()
+   print(request_data)
+   print(data)
+   print('a')
+   print("data is " + format(data))
+   print("request_data is " + format(request_data))
+   app.logger.info('Info level log')
    return {'hello': 'world'}
-
-    '''
-    uploaded_file = request.files['file']
-    if uploaded_file.filename != '':
-        uploaded_file.save(uploaded_file.filename)
-    return redirect(url_for('index')) '''
