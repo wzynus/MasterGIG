@@ -112,7 +112,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar path={Routes.Gigs.path} component={Gig}/>
     <RouteWithSidebar path={Routes.Stream.path} component={Stream}/>
-    <RouteWithSidebar path={Routes.Admin.path} component={AdminHomePage}/>
+    <RouteWithSidebar path={Routes.AdminHome.path} component={AdminHomePage}/>
 
 
     {/* components */}

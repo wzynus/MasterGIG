@@ -18,7 +18,14 @@ export const Routes = {
     Stream: {path: "/stream"},
     Video: {path: "/videos"},
     Message :{path: "/{userId}/message"},
-    Admin : {path: "/adminHomePage"},
+
+
+    AdminHome : {path: "/adminHomePage"},
+    ViewAllUsers : {path: "/user/viewAllUsers"},
+    ViewAllFeedbacks : {path: "/feedbackandreport/viewAllFeedbacks"},
+    ViewAllReports : {path: "/feedbackandreport/viewAllReports"},
+    BroadcastAllUsers : {path: "/broadcast/broadcastAllUsers"},
+    BroadcastSelectedUsers : {path: "/broadcast/broadcastSelectedUsers"},
 
    
 

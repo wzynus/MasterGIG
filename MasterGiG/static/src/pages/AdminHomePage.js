@@ -4,6 +4,13 @@ import { Routes } from "../routes";
 
 
 // pages
+import Homepage from "./admin/Homepage";
+import ViewAllUsers from "./admin/ViewAllUsers";
+import ViewAllFeedbacks from "./admin/ViewAllFeedbacks";
+import ViewAllReports from "./admin/ViewAllReports";
+import BroadcastAllUsers from "./admin/BroadcastAllUsers";
+import BroadcastSelectedUsers from "./admin/BroadcastSelectedUsers";
+
 
 
 // components
@@ -12,7 +19,6 @@ import AdminNavbar from "../components/AdminNavBar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
 
-import Accordion from "./admin/Accordion";
 
 
 
@@ -67,9 +73,16 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 
 export default () => (
   <Switch>
+   
 
-    {/* admin pages */}
-    <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
+    {/* pages */}
+    <RouteWithSidebar exact path={Routes.AdminHome.path} component={Homepage} />
+    <RouteWithSidebar exact path={Routes.ViewAllUsers.path} component={ViewAllUsers} />
+    <RouteWithSidebar exact path={Routes.ViewAllFeedbacks.path} component={ViewAllFeedbacks} />
+    <RouteWithSidebar exact path={Routes.ViewAllReports.path} component={ViewAllReports} />
+    <RouteWithSidebar exact path={Routes.BroadcastAllUsers.path} component={BroadcastAllUsers} />
+    <RouteWithSidebar exact path={Routes.BroadcastSelectedUsers.path} component={BroadcastSelectedUsers} />
+
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>

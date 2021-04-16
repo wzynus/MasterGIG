@@ -83,29 +83,23 @@ export default (props = {}) => {
           <div className="sidebar-inner px-4 pt-3">
             
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem title="MasterGiG" link={Routes.DashboardOverview.path} image={Logo} />
+              <NavItem title="MasterGiG" link={Routes.AdminHome.path} image={Logo} />
 
-              <CollapsableNavItem eventKey="admin/" title="User Account Management" icon={faUser}>
-                <NavItem title="View All Users" link={Routes.Accordions.path} />
-                <NavItem title="View User" link={Routes.Accordions.path} />
-                <NavItem title="Ban User" link={Routes.Accordions.path} />
-                <NavItem title="Unban User" link={Routes.Accordions.path} />
-                <NavItem title="Delete User Account" link={Routes.Accordions.path} />
-                <NavItem title="Delete User Video" link={Routes.Accordions.path} />
+              <CollapsableNavItem eventKey="user/" title="User Account Management" icon={faUser}>
+                <NavItem title="View All Users" link={Routes.ViewAllUsers.path} />
+                
               </CollapsableNavItem>
             
-              <CollapsableNavItem eventKey="admin/" title="Feedback and Report" icon={faBoxOpen}>
-                <NavItem title="View All Feedbacks" link={Routes.Accordions.path} />
-                <NavItem title="View Feedback" link={Routes.Accordions.path} />
-                <NavItem title="View All Reports" link={Routes.Accordions.path} />
-                <NavItem title="View Report" link={Routes.Accordions.path} />
+              <CollapsableNavItem eventKey="feedbackandreport/" title="Feedback and Report" icon={faBoxOpen}>
+                <NavItem title="View All Feedbacks" link={Routes.ViewAllFeedbacks.path} />
+                
+                <NavItem title="View All Reports" link={Routes.ViewAllReports.path} />
+                
               </CollapsableNavItem>
 
-              <CollapsableNavItem eventKey="admin/" title="Broadcast Management" icon={faBroadcastTower}>
-                <NavItem title="View All Feedbacks" link={Routes.Accordions.path} />
-                <NavItem title="View Feedback" link={Routes.Accordions.path} />
-                <NavItem title="View All Reports" link={Routes.Accordions.path} />
-                <NavItem title="View Report" link={Routes.Accordions.path} />
+              <CollapsableNavItem eventKey="broadcast/" title="Broadcast Management" icon={faBroadcastTower}>
+                <NavItem title="Broadcast to all users" link={Routes.BroadcastAllUsers.path} />
+                <NavItem title="Broadcast to selected users" link={Routes.BroadcastSelectedUsers.path} />
               </CollapsableNavItem>
 
             </Nav>
