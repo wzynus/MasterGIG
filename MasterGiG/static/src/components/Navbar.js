@@ -112,7 +112,7 @@ export default (props) => {
                 <Dropdown.Divider />
 
                 <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
+                  <Link to="/logout"><FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout</Link>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

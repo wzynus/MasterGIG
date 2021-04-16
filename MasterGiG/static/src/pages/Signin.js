@@ -33,6 +33,8 @@ const Signin = () => {
     setPassword(e.target.value);
   };
 
+  
+
   if (user) {
     return <Redirect to="/UserHomePage" />;
   }
@@ -64,20 +66,20 @@ const Signin = () => {
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your email</Form.Label>
                     <InputGroup>
-                      <InputGroup.Text value={email} onChange={updateEmail}>
+                      <InputGroup.Text  >
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" />
+                      <Form.Control autoFocus required type="email" value={email} placeholder="example@company.com" onChange={updateEmail} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
                       <Form.Label>Your Password</Form.Label>
                       <InputGroup>
-                        <InputGroup.Text value ={password} onChange={updatePassword}>
+                        <InputGroup.Text >
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
-                        <Form.Control required type="password" placeholder="Password" />
+                        <Form.Control required type="password" placeholder="Password" value ={password} onChange={updatePassword}  />
                       </InputGroup>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">

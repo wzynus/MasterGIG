@@ -18,24 +18,32 @@ from .api import content_routes
 from .api import event_routes
 from .api import payment_routes
 from .api import ContentController
-from .api import  user_routes
+from .api import user_routes
 from .api import gig_routes
 from .api import search
 #from .api import route
 
 
-
-
 app = Flask(__name__)
 
-#Load configurations
+# Setup login manager
+login = LoginManager(app)
+login.login_view = 'auth.unauthorized'
+
+
+@login.user_loader
+def load_user(id):
+    return UserEntity.query.get(int(id))
+
+
+# Load configurations
 app.config.from_object(Config)
 
-#Application security and db initialization command
-CORS(app)
+# Tell flask about our seed commands
+# app.cli.add_command(seed_commands)
 
 
-#Use of flask blueprint to make the app modular
+# Use of flask blueprint to make the app modular
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(payment_routes, url_prefix='/api/payment')
@@ -44,36 +52,28 @@ app.register_blueprint(content_routes, url_prefix='/api/content')
 app.register_blueprint(event_routes, url_prefix='/api/event')
 app.register_blueprint(admin_routes, url_prefix='/api/admin')
 
-#initialize db on app start
+# initialize db on app start
 db.init_app(app)
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
-
-#Setup login manager
-login = LoginManager(app)
-login.login_view = 'auth.unauthorized'
-
-@login.user_loader
-def load_user(id):
-    return UserEntity.query.get(int(id))
+# Application security
+CORS(app)
 
 
-#Create db
+# Create db
 @manager.command
 def create_db():
     """Creates the db tables."""
     db.create_all()
 
 
-
 app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
-        if app.config['ELASTICSEARCH_URL'] else None
+    if app.config['ELASTICSEARCH_URL'] else None
 
 
-
-#Some stuff we need to add to make it https
+# Some stuff we need to add to make it https
 
 
 @app.before_request
@@ -104,4 +104,3 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
-

@@ -1,10 +1,14 @@
 
+//const API_ROOT = heroky server name
 
 
 export const authenticate = async () => {
   const response = await fetch("/api/auth/", {
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json"
+      
+     
     },
   });
   return await response.json();
@@ -15,13 +19,15 @@ export const login = async (email, password) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json"
+     
     },
     body: JSON.stringify({
       email,
       password,
     }),
   });
-  return await response.json();
+  return response.json();
 };
 
 export const logout = async () => {
