@@ -24,16 +24,30 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Form } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import { uploadVideo } from "../../utils/axios_restfulAPI";
 class UploadVideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedFile: null,
+      title: "",
+      description: "",
       thumbnail: null,
     };
   }
+  onChangeTitle = (e) => {
+    this.setState({ title: e.target.value });
+  };
+  onChangeDescription = (e) => {
+    this.setState({ description: e.target.value });
+  };
   onUpload = (e) => {
+    const file = e.target.files[0];
     this.setState({ selectedFile: e.target.files[0] });
+  };
+  onUploadImage = (e) => {
+    console.log(e.target.files[0]);
+    this.setState({ thumbnail: e.target.files[0] });
   };
   showVideoName = () => {
     if (this.state.selectedFile != null) {
@@ -46,20 +60,25 @@ class UploadVideo extends React.Component {
     }
   };
   showForm = () => {
-    console.log(this.state.selectedFile);
+    console.log(this.state.title);
     if (this.state.selectedFile != null) {
       return (
         <div>
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Name your Video" />
+              <Form.Control
+                type="text"
+                onChange={this.onChangeTitle}
+                placeholder="Name your Video"
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows="3"
+                onChange={this.onChangeDescription}
                 placeholder="Put Description Here"
               />
             </Form.Group>
@@ -88,9 +107,6 @@ class UploadVideo extends React.Component {
                             Choose Thumbnail
                           </div>
                           {this.showThumbnailName()}
-                          {/*                     <div className="text-gray small">
-                      JPG, GIF or PNG. Max size of 800K
-                    </div> */}
                         </div>
                       </div>
                     </div>
@@ -100,7 +116,11 @@ class UploadVideo extends React.Component {
             </Card>
           </Form>
           <Link to="/video/upload">
-            <Button variant="secondary" className="m-1">
+            <Button
+              variant="secondary"
+              className="m-1"
+              onClick={this.handleSubmit}
+            >
               Upload
             </Button>
           </Link>
@@ -108,9 +128,24 @@ class UploadVideo extends React.Component {
       );
     }
   };
-  onUploadImage = (e) => {
-    console.log(e.target.files[0]);
-    this.setState({ thumbnail: e.target.files[0] });
+  handleSubmit = () => {
+    const fileVideo = this.state.selectedFile;
+    const fileThumbnail = this.state.thumbnail;
+    const reader = new FileReader();
+    const data = { ...this.state };
+    /*    console.log(reader.readAsDataURL(fileThumbnail));
+    data.thumbnail = reader.readAsDataURL(fileThumbnail);
+    console.log(this.state);
+    console.log("data");
+    console.log(data);
+    console.log(data.thumbnail); */
+    uploadVideo(this.state)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   render() {
     return (
@@ -134,9 +169,6 @@ class UploadVideo extends React.Component {
                   <div className="d-md-block text-start">
                     <div className="fw-normal text-dark mb-1">Choose Video</div>
                     {this.showVideoName()}
-                    {/*                     <div className="text-gray small">
-                      JPG, GIF or PNG. Max size of 800K
-                    </div> */}
                   </div>
                 </div>
               </div>

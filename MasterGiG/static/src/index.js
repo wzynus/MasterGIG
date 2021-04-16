@@ -15,8 +15,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createBrowserHistory } from "history";
-import { Router } from "react-router-dom";
 import { Provider } from 'react-redux'
 import configureStore from './store';
 
@@ -31,7 +29,7 @@ import "react-datetime/css/react-datetime.css";
 
 
 import App from './App';
-import ScrollToTop from "./components/ScrollToTop";
+
 
 
 
@@ -43,7 +41,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 }
 
-const history = createBrowserHistory();
+
 
 function Root() {
   return (
@@ -53,10 +51,10 @@ function Root() {
   );
 }
 
-ReactDOM.render(  
-    <Router history={history}>
-      <ScrollToTop />
-      <Root/>
-    </Router>,
-  document.getElementById("root")
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>,
+  document.getElementById('root')
 );

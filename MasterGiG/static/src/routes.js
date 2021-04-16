@@ -6,7 +6,6 @@
     DashboardOverview: { path: "/" },
     Transactions: { path: "/transactions" },
     Settings: { path: "/settings" },
-    Gigs: {path: "/gigs"},
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Billing: { path: "/billing" },
     Invoice: { path: "/invoice" },
@@ -16,16 +15,28 @@
     ResetPassword: { path: "/reset-password" },
     Lock: { path: "/lock" },
     NotFound: { path: "/404" },
-    ServerError: { path: "/500" },
-    Stream: {path: "/stream"},
-    Video: {path: "/videos"},
+    ServerError: { path: "/Unauthorized" },
+    SearchResult: { path: "/search/:query" },
     Message :{path: "/{userId}/message"},
     Admin : {path: "/adminHomePage"},
     UserHomePage : {path: "/UserHomePage"},
+
+    Stream: {path: "/stream"},
+    StreamInfo: { path: "/streamsinfo" },
+
+    //content
+    Video: {path: "/videos"},
     PlayVideo: { path: "/video/play" },
     UploadVideo: { path: "/video/upload" },
     EditVideo: { path: "/video/edit" },
-    StreamInfo: { path: "/streamsinfo" },
+    Analytics: { path: "/video/analytics" },
+
+    //gig routes
+    GigPlanAll: {path: "/gigs"},
+    GigPlanNew: {path: "/gigs/new-plan"},
+    GigMyRequestAll : {path:"/gigs/id/my-request"},
+    GigPlanUpdate : {path: "/gigs/gigId/update"},
+    GigPlanRequestAll : {patg:"/gigs/gigId/view-all-request"},
 
 
    

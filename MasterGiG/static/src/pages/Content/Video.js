@@ -1,7 +1,7 @@
 import React from "react";
 
 import VideoPlayer from "./VideoPlayer";
-import video2 from "../assets/img/Sample_Video.mp4"
+import video2 from "../../assets/Sample_Video.mp4"
 export default class Video extends React.Component {
   render() {
     const videoJsOptions = {

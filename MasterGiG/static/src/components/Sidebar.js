@@ -4,14 +4,14 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBook,faMusic, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faVideo, faStream, faInfo, faPiggyBank, faCat, faUpload, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
 import ThemesbergLogo from "../assets/img/themesberg.svg";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
-import Logo from "../assets/img/mastergig_logo.jfif"
+import Logo from "../assets/MasterGiGLogo.png"
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export default (props = {}) => {
@@ -99,10 +99,26 @@ export default (props = {}) => {
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem title="MasterGiG" link={Routes.DashboardOverview.path} image={Logo} />
+              <CollapsableNavItem eventKey="streams/" title="Streams" icon={faStream}>
               <NavItem title="Streams" link={Routes.Stream.path} icon={faChartPie} />
-              <NavItem title="Videos" icon={faHandHoldingUsd} link={Routes.Video.path} /> 
-              <NavItem title="Gigs" icon={faHandHoldingUsd} link={Routes.Gigs.path} />
-              <NavItem title="Message" icon={faCog} link={Routes.Message.path} />
+              <NavItem
+                title="Stream Info"
+                link={Routes.StreamInfo.path}
+                icon={faInfo}
+              />
+              </CollapsableNavItem>
+      
+              <CollapsableNavItem eventKey="videos/" title="Videos" icon={faVideo}>
+              <NavItem title="Videos Upload" icon={faUpload} link={Routes.Video.path} /> 
+              <NavItem title="Analytics" link={Routes.Analytics.path}  icon={faChartPie}/>
+              </CollapsableNavItem>
+              
+              <CollapsableNavItem eventKey="gigs/" title="Gigs" icon={faMusic}>
+                <NavItem title="View My Gig Plan"  link={Routes.GigPlanAll.path} />
+                <NavItem title="New Gig Plan" link={Routes.GigPlanNew.path} />
+                <NavItem title="My Gig Request"  link={Routes.GigMyRequestAll.path} />
+              </CollapsableNavItem>
+              <NavItem title="Message" icon={faInbox} link={Routes.Message.path} />
 
               <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>
                 <NavItem title="Accordion" link={Routes.Accordions.path} />

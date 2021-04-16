@@ -1,13 +1,11 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-/* import { Card } from "material-ui/Card";
-import { CardMedia } from "material-ui/Card"; */
 import { Link } from "react-router-dom";
 import ContentFree from "./ContentFree";
 import ContentPremium from "./ContentPremium";
 import ContentOwner from "./ContentOwner";
 import { Button } from "@themesberg/react-bootstrap";
+import { login, uploadVideo } from "../../utils/axios_restfulAPI";
+import axios from "axios";
 const styleBlur = {
   filter: "blur(20px)",
 };

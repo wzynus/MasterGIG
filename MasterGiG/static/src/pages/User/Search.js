@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search as GetResult } from './axios_restfulAPI';
+//import { Search as GetResult } from './axios_restfulAPI';
 import { Link } from "react-router-dom";
 import { withFocusable, withNavigation } from 'react-tv-navigation'
 
@@ -23,7 +23,7 @@ export default class Search extends React.Component {
   componentWillMount () {
     const { id } = this.props.match.params
     console.log(id);
-    GetResult(id, this.setState)
+    //GetResult(id, this.setState)
   }
   render(){
     if (this.state.streams) {

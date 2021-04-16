@@ -3,6 +3,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+   
     POSTGRES_URL= '127.0.0.1:5432'
     POSTGRES_USER= 'postgres'
     POSTGRES_PW = '123786'
@@ -15,3 +16,5 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL') or 'http://localhost:5000'
+    DEBUG=True
+    PORT=5000

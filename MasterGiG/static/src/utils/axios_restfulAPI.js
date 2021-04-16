@@ -91,4 +91,25 @@ export const register = newUser => {
       console.log(err)
     });
   }
+
+
+  export const uploadVideo = (video) => {
+    return axios
+      .post(API_URL + "/uploadVideo", {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        selectedFile: video.selectedFile,
+        title: video.title,
+        description: video.description,
+        thumbnail: video.thumbnail,
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
   
